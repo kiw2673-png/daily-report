@@ -104,7 +104,7 @@
 </head>
 <body>
 <!-- AUTH -->
-<div id="authScreen" class="scr active"><div class="abg"><div class="acard fi"><div style="text-align:center;margin-bottom:24px"><div id="authIcon" class="aico ui">📋</div><div style="font-size:11px;color:var(--ts);letter-spacing:1px;font-weight:500;margin-bottom:2px">대성쎌틱에너시스(주)</div><h1 style="font-size:18px;font-weight:700">CS업무일지</h1><p id="authSub" style="margin-top:5px;color:var(--ts);font-size:12px">사번을 입력하세요</p></div><div id="authErr" class="err" style="display:none"></div>
+<div id="authScreen" class="scr active"><div class="abg"><div class="acard fi"><div style="text-align:center;margin-bottom:24px"><div id="authIcon" class="aico ui">📋</div><div style="font-size:11px;color:var(--ts);letter-spacing:1px;font-weight:500;margin-bottom:2px">대성쎌틱에너시스(주)</div><h1 style="font-size:18px;font-weight:700">CS업무일지</h1><p style="font-size:9px;color:var(--ts);margin-top:2px" id="appVerLabel"></p><p id="authSub" style="margin-top:5px;color:var(--ts);font-size:12px">사번을 입력하세요</p></div><div id="authErr" class="err" style="display:none"></div>
 <div id="loginStep"><label class="fl">회사 사번 (9자리)</label><input id="empIdInput" class="fi-input" maxlength="9" placeholder="000000000"><div style="text-align:right;font-size:10px;color:var(--ts);margin-top:3px"><span id="empCnt">0</span>/9</div><button id="loginBtn" class="btn bd" style="margin-top:8px" disabled>로그인</button><div style="text-align:center;margin-top:16px"><button onclick="showAL()" style="background:none;border:none;color:var(--ts);font-size:10px;cursor:pointer;font-family:inherit;text-decoration:underline">🔐 관리자 모드</button></div></div>
 <div id="regStep" style="display:none"><div style="background:var(--ibg);border-radius:8px;padding:8px 12px;margin-bottom:14px;font-size:12px">사번: <strong id="regEmpId"></strong></div><label class="fl">이름</label><input id="nameInput" class="fi-input" placeholder="이름" style="margin-bottom:12px"><label class="fl">지사명</label><select id="branchSelect" class="fi-sel"><option value="">선택</option></select><div style="display:flex;gap:8px;margin-top:18px"><button onclick="backTL()" class="btn bo" style="flex:1;font-size:12px">뒤로</button><button onclick="doReg()" class="btn bp" style="flex:2;font-size:12px">등록</button></div></div>
 <div id="admStep" style="display:none"><label class="fl">관리자 코드</label><input id="admCodeInput" class="fi-input" type="password" placeholder="관리자 코드"><div style="display:flex;gap:8px;margin-top:16px"><button onclick="backTL()" class="btn bo" style="flex:1;font-size:12px">뒤로</button><button onclick="doAL()" class="btn ba" style="flex:2;font-size:12px">로그인</button></div></div></div></div></div>
@@ -140,6 +140,7 @@
 firebase.initializeApp({apiKey:"AIzaSyCETRrYLTEw-EqBfTm0cD6Sh5nc7kP6_oc",authDomain:"work-journal-99e5a.firebaseapp.com",projectId:"work-journal-99e5a",storageBucket:"work-journal-99e5a.firebasestorage.app",messagingSenderId:"298252811540",appId:"1:298252811540:web:3a7e896a943bfa44ff5601"});
 const db=firebase.firestore();
 const SA=["ADMIN2024","ADMIN2025","ADMIN2026"];
+const APP_VER="1.6";
 const DEF_BR=["CS본부","서울북부지사","서울남부지사","경인지사","원주지사","대전지사","대구지사","부산지사","경남지사","광주지사","전주지사"];
 const DEF_MODELS=[{n:"DNB",c:["13","16","20","25","30"]},{n:"DNB_H",c:["13","16","20","25","30"]},{n:"DiB",c:["13","16","20"]},{n:"DNC",c:["15","18","22","27","32"]},{n:"DNC1",c:["15","18","22","27","32"]},{n:"DOC",c:["15","22","27"]},{n:"DPC",c:["27"]},{n:"DQC",c:["15","18","22","27","32"]}];
 const DEF_CATS=["설치","수리","점검","클레임","현장지원","품질상담","기술상담","부품상담","콜센터상담","민원상담","기타"];
@@ -620,6 +621,7 @@ async function doXLImport(){
 }
 
 /* ══ INIT ══ */
+document.querySelectorAll("#appVerLabel").forEach(el=>{el.textContent="v"+APP_VER});
 (async function(){const sess=JSON.parse(localStorage.getItem("session")||"null");if(sess){await loadSettings();if(sess.type==="admin"){showS("adminScreen");loadAdm()}else if(sess.type==="user"&&sess.user){CU=sess.user;showS("journalScreen");initJ()}}})();
 </script>
 </body>
